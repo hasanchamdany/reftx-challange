@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 const title = "ReftX-Challenge"
 
 export default function Home() {
+  
   return (
     <>
       <Head>

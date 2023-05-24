@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
-const FormMain = () => {
+
+
+const  FormMain = () => {
     let today = new Date().toISOString().slice(0, 10)
   const [inputs, setInputs] = useState({["date"]: today});
 
@@ -10,10 +12,30 @@ const FormMain = () => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(inputs);
+    try {
+        
+        const response = await fetch('https://script.google.com/macros/s/AKfycbzt3cXuCNecXbY-t3w4hCScY2Nv2Wz0ntgTTPAxvqg_2DDSNdoFVD6i-wWZgLJvFXk-2A/exec?action=addUser', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(inputs)
+        });
+        // console.log("masuk TRY client setelah fetch")
+  
+        const content = await response.json();
+        console.log(content);
+        alert(content.data.tableRamge)
+      } catch (error) {
+        console.error(error);
+      }
   };
+
+  
 
   return (
     <form onSubmit={handleSubmit}>
