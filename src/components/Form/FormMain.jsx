@@ -1,10 +1,9 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-
-
-const  FormMain = () => {
-    let today = new Date().toISOString().slice(0, 10)
-  const [inputs, setInputs] = useState({["date"]: today});
+const FormMain = () => {
+  let today = new Date().toISOString().slice(0, 10);
+  const [inputs, setInputs] = useState({ ["date"]: today });
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -16,26 +15,63 @@ const  FormMain = () => {
     event.preventDefault();
     console.log(inputs);
     try {
-        
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzt3cXuCNecXbY-t3w4hCScY2Nv2Wz0ntgTTPAxvqg_2DDSNdoFVD6i-wWZgLJvFXk-2A/exec?action=addUser', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(inputs)
-        });
-        // console.log("masuk TRY client setelah fetch")
-  
-        const content = await response.json();
-        console.log(content);
-        alert(content.data.tableRamge)
-      } catch (error) {
-        console.error(error);
-      }
-  };
 
-  
+        axios.post("https://sheet.best/api/sheets/638a5d5b-858c-42b9-8181-de9027a47dd9", inputs).then((response) => {
+            console.log("hasil response = ");
+            console.log(response)
+        })
+
+      // const response = await fetch('https://script.google.com/macros/s/AKfycbwX-UHU_Zr10x3qOQs3jpFCzE8COsPboVIiiMwz9WyJyDVRWwMIzOAAzt_OqvPtplrd5Q/exec?action=addUser', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //     'Access-Control-Allow-Origin': 'http://localhost:3000'
+      //   },
+      //   mode: 'no-cors',
+      //   body: JSON.stringify(inputs)
+      // });
+
+      // const response = await fetch('https://sheet.best/api/sheets/638a5d5b-858c-42b9-8181-de9027a47dd9', {
+      //   method: 'POST',
+      //   headers: {
+      //     // 'Accept': 'application/json',
+      //     'Content-Type': 'application/json',
+      //     // 'Access-Control-Allow-Origin': 'http://localhost:3000'
+      //   },
+      //   mode: 'no-cors',
+      //   body: inputs
+      // });
+      // console.log("masuk TRY client setelah fetch")
+
+    //   fetch(
+    //     "https://sheet.best/api/sheets/638a5d5b-858c-42b9-8181-de9027a47dd9",
+    //     {
+    //       method: "POST",
+    //       mode: "cors",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(inputs),
+    //     }
+    //   )
+    //     .then((r) => r.json())
+    //     .then((inputs) => {
+    //       // The response comes here
+    //       console.log(inputs);
+    //     })
+    //     .catch((error) => {
+    //       // Errors are reported there
+    //       console.log(error);
+    //     });
+
+    //   const content = await response.json();
+    //   console.log(content);
+    //   alert(content.data.tableRamge);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
