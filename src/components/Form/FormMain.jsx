@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const FormMain = () => {
-  
   const [inputs, setInputs] = useState({});
 
   const handleChange = (event) => {
@@ -16,13 +17,25 @@ const FormMain = () => {
     // console.log(inputs);
     // let today = new Date().toISOString().slice(0, 10);
     try {
-
-        axios.post("https://sheet.best/api/sheets/638a5d5b-858c-42b9-8181-de9027a47dd9", inputs).then((response) => {
-            console.log("hasil response = ");
-            console.log(response)
-        })
-
-      
+      axios
+        .post(
+          "https://sheet.best/api/sheets/638a5d5b-858c-42b9-8181-de9027a47dd9",
+          inputs
+        )
+        .then((response) => {
+          console.log("hasil response = ");
+          console.log(response);
+          toast.success('Data uploaded!', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        });
     } catch (error) {
       console.error(error);
     }
@@ -30,66 +43,82 @@ const FormMain = () => {
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
-      <label className="font-poppins text-blue-dark font-bold "> Nama</label>
-      <input
-        name="name"
-        value={inputs.name || ""}
-        onChange={handleChange}
-        type="text"
-        className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
-        placeholder="Nama"
-      ></input>
-      <label className="font-poppins text-blue-dark font-bold ">
-        {" "}
-        Tanggal Lahir
-      </label>
-      <input
-        name="tanggalLahir"
-        value={inputs.tanggalLahir || ""}
-        onChange={handleChange}
-        type="date"
-        className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
-      ></input>
-      <label className="font-poppins text-blue-dark font-bold ">
-        {" "}
-        Berat Badan
-      </label>
-      <input
-        name="beratBadan"
-        value={inputs.beratBadan || ""}
-        onChange={handleChange}
-        type="number"
-        className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
-        placeholder="Berat Badan (kg)"
-      ></input>
-      <label className="font-poppins text-blue-dark font-bold ">
-        {" "}
-        Tanggal Pengambilan Data
-      </label>
-      <input
-        name="tanggalData"
-        value={inputs.tanggalData || ""}
-        onChange={handleChange}
-        type="date"
-        className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
-      ></input>
+      <form onSubmit={handleSubmit}>
+        <label className="font-poppins text-blue-dark font-bold "> Nama</label>
+        <input
+          name="name"
+          value={inputs.name || ""}
+          onChange={handleChange}
+          type="text"
+          className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
+          placeholder="Nama"
+        ></input>
+        <label className="font-poppins text-blue-dark font-bold ">
+          {" "}
+          Tanggal Lahir
+        </label>
+        <input
+          name="tanggalLahir"
+          value={inputs.tanggalLahir || ""}
+          onChange={handleChange}
+          type="date"
+          className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
+        ></input>
+        <label className="font-poppins text-blue-dark font-bold ">
+          {" "}
+          Berat Badan
+        </label>
+        <input
+          name="beratBadan"
+          value={inputs.beratBadan || ""}
+          onChange={handleChange}
+          type="number"
+          className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
+          placeholder="Berat Badan (kg)"
+        ></input>
+        <label className="font-poppins text-blue-dark font-bold ">
+          {" "}
+          Tanggal Pengambilan Data
+        </label>
+        <input
+          name="tanggalData"
+          value={inputs.tanggalData || ""}
+          onChange={handleChange}
+          type="date"
+          className="block bg-white py-2 px-4 border-2 border-blue-medium rounded-xl mb-4"
+        ></input>
 
-      {/* <Link href="/signup"> */}
-      {/* <button onClick={() => setInputs({})} className="bg-red-400 py-2 px-4 font-poppins font-bold text-white rounded-lg mr-8 hover:bg-red-500 hover:text-blue-pale border-2 border-white hover:border-blue-medium">
+        {/* <Link href="/signup"> */}
+        {/* <button onClick={() => setInputs({})} className="bg-red-400 py-2 px-4 font-poppins font-bold text-white rounded-lg mr-8 hover:bg-red-500 hover:text-blue-pale border-2 border-white hover:border-blue-medium">
         Clear
       </button> */}
-      {/* </Link> */}
-      <div className="flex w-full">
-      <button className="w-full justify-center bg-blue-400 py-2 px-4 font-poppins font-bold text-white rounded-lg hover:bg-blue-500 hover:text-blue-pale border-2 border-white hover:border-blue-medium">
-        Submit
+        {/* </Link> */}
+        <div className="flex w-full">
+          <button className="w-full justify-center bg-blue-400 py-2 px-4 font-poppins font-bold text-white rounded-lg hover:bg-blue-500 hover:text-blue-pale border-2 border-white hover:border-blue-medium">
+            Submit
+          </button>
+        </div>
+      </form>
+      <button
+        onClick={() => setInputs({})}
+        className="w-full bg-red-400 py-2 px-4 font-poppins font-bold text-white rounded-lg mr-8 hover:bg-red-500 hover:text-blue-pale border-2 border-white hover:border-blue-medium"
+      >
+        Clear
       </button>
-      </div>
-    </form>
-    <button onClick={() => setInputs({})} className="w-full bg-red-400 py-2 px-4 font-poppins font-bold text-white rounded-lg mr-8 hover:bg-red-500 hover:text-blue-pale border-2 border-white hover:border-blue-medium">
-    Clear
-  </button>
-  </>
+
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
   );
 };
 
